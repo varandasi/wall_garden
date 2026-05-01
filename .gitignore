@@ -34,3 +34,5 @@ daemon/simulator/state.json
 # Editor
 .idea/
 .vscode/
+
+.claude
