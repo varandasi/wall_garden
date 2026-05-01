@@ -7,8 +7,8 @@ class PhotosController < ApplicationController
   def show
     @photo = Photo.find(params[:id])
     authorize @photo
-    if File.exist?(@photo.path)
-      send_file @photo.path, type: 'image/jpeg', disposition: 'inline'
+    if File.exist?(@photo.absolute_path)
+      send_file @photo.absolute_path, type: 'image/jpeg', disposition: 'inline'
     else
       head :not_found
     end
