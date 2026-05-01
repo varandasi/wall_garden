@@ -1,4 +1,5 @@
 #!/usr/bin/env sh
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
+export PGGSSENCMODE=disable
 exec foreman start -f Procfile.dev "$@"
