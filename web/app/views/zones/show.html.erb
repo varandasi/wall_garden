@@ -1,0 +1,49 @@
+<div class="d-flex justify-content-between align-items-start mb-3">
+  <div>
+    <h1 class="h3 mb-0"><%= @zone.name %></h1>
+    <small class="text-muted"><%= @zone.plant_profile&.common_name || 'unassigned' %></small>
+  </div>
+  <div class="d-flex gap-2">
+    <%= button_to t('dashboard.actions.water'), water_zone_path(@zone), method: :post,
+                  class: 'btn btn-outline-primary' %>
+    <%= link_to 'Edit', edit_zone_path(@zone), class: 'btn btn-outline-secondary' %>
+  </div>
+</div>
+
+<dl class="row mb-4">
+  <dt class="col-sm-3">Latest moisture</dt>
+  <dd class="col-sm-9"><%= @zone.latest_moisture ? "#{number_with_precision(@zone.latest_moisture, precision: 1)}%" : '—' %></dd>
+  <dt class="col-sm-3">Target</dt>
+  <dd class="col-sm-9"><%= @zone.target_moisture_pct %>% (±<%= @zone.hysteresis_pct.to_f / 2 %>)</dd>
+  <dt class="col-sm-3">Today's water</dt>
+  <dd class="col-sm-9"><%= @zone.ml_today.to_i %> / <%= @zone.max_ml_per_day %> mL</dd>
+  <dt class="col-sm-3">Pump</dt>
+  <dd class="col-sm-9">GPIO <%= @zone.pump_gpio %>, <%= @zone.pump_ml_per_sec %> mL/s</dd>
+</dl>
+
+<h2 class="h5">Recent watering events</h2>
+<table class="table table-sm">
+  <thead>
+    <tr>
+      <th>Started</th>
+      <th>Trigger</th>
+      <th class="text-end">Planned</th>
+      <th class="text-end">Actual</th>
+      <th>Aborted</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @recent_events.each do |e| %>
+      <tr>
+        <td><%= l(e.started_at, format: :short) %></td>
+        <td><%= e.trigger %></td>
+        <td class="text-end"><%= e.planned_ml %></td>
+        <td class="text-end"><%= e.actual_ml || '—' %></td>
+        <td><%= e.aborted_reason || '—' %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2 class="h5 mt-4">Last 24h moisture readings</h2>
+<p class="text-muted small">Visualisation TBD (slice 6).</p>

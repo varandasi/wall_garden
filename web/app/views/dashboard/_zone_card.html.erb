@@ -1,0 +1,52 @@
+<%# locals: (zone:) %>
+<% moisture = zone.latest_moisture %>
+<% target = zone.target_moisture_pct.to_f %>
+<% pct = moisture ? (moisture / [target, 1].max * 100).clamp(0, 200) : 0 %>
+<% bar_class = if moisture.nil? then 'bg-secondary'
+   elsif zone.thirsty? then 'bg-warning'
+   elsif moisture > target + zone.hysteresis_pct/2 then 'bg-info'
+   else 'bg-success' end %>
+
+<div class="col-12 col-md-6 col-lg-3">
+  <div class="card border-0 shadow-sm h-100">
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-start">
+        <div>
+          <h2 class="h6 mb-0"><%= zone.name %></h2>
+          <small class="text-muted"><%= zone.plant_profile&.common_name || 'unassigned' %></small>
+        </div>
+        <% if !zone.enabled %>
+          <span class="badge bg-secondary">off</span>
+        <% elsif zone.thirsty? %>
+          <span class="badge bg-warning text-dark">thirsty</span>
+        <% else %>
+          <span class="badge bg-success">ok</span>
+        <% end %>
+      </div>
+
+      <div class="my-3">
+        <div class="d-flex justify-content-between small text-muted">
+          <span><%= t('dashboard.moisture') %></span>
+          <span><%= moisture ? "#{number_with_precision(moisture, precision: 1)}%" : '—' %> / <%= "#{number_with_precision(target, precision: 0)}%" %></span>
+        </div>
+        <div class="progress" style="height: 6px">
+          <div class="progress-bar <%= bar_class %>" role="progressbar" style="width: <%= [pct, 100].min %>%" aria-valuenow="<%= pct %>" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+      </div>
+
+      <dl class="row small mb-3">
+        <dt class="col-6 text-muted"><%= t('dashboard.daily_water') %></dt>
+        <dd class="col-6 text-end"><%= zone.ml_today.to_i %> mL</dd>
+        <dt class="col-6 text-muted">cap</dt>
+        <dd class="col-6 text-end"><%= zone.max_ml_per_day %> mL</dd>
+      </dl>
+
+      <div class="d-flex gap-2">
+        <%= button_to t('dashboard.actions.water'), water_zone_path(zone), method: :post,
+                       class: 'btn btn-sm btn-outline-primary flex-fill',
+                       data: { turbo_confirm: "Water #{zone.name}?" } %>
+        <%= link_to t('dashboard.actions.edit'), edit_zone_path(zone), class: 'btn btn-sm btn-outline-secondary flex-fill' %>
+      </div>
+    </div>
+  </div>
+</div>

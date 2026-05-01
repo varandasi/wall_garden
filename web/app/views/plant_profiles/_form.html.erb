@@ -1,0 +1,19 @@
+<%# locals: (profile:) %>
+<%= simple_form_for profile do |f| %>
+  <div class="row">
+    <div class="col-12 col-md-6">
+      <%= f.input :common_name %>
+      <%= f.input :scientific_name %>
+      <%= f.input :notes, as: :text, input_html: { rows: 4 } %>
+    </div>
+    <div class="col-12 col-md-6">
+      <%= f.input :ideal_moisture_min %>
+      <%= f.input :ideal_moisture_max %>
+      <%= f.input :ideal_lux_min %>
+      <%= f.input :ideal_temp_c_min %>
+      <%= f.input :ideal_temp_c_max %>
+    </div>
+  </div>
+  <%= f.submit class: 'btn btn-primary' %>
+  <%= link_to 'Cancel', plant_profiles_path, class: 'btn btn-outline-secondary' %>
+<% end %>

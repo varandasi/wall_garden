@@ -1,0 +1,18 @@
+<h1 class="h3 mb-3">Ask the garden</h1>
+
+<% if @messages.any? %>
+  <div class="mb-4">
+    <% @messages.each do |m| %>
+      <div class="d-flex <%= m['role'] == 'user' ? 'justify-content-end' : '' %> mb-2">
+        <div class="card border-0 shadow-sm <%= m['role'] == 'user' ? 'bg-primary text-white' : 'bg-light' %>" style="max-width: 75%">
+          <div class="card-body py-2 px-3"><%= simple_format(m['text']) %></div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+
+<%= form_with url: chat_path, method: :post, class: 'd-flex gap-2' do |f| %>
+  <%= f.text_field :question, class: 'form-control', placeholder: 'How is zone 1 doing?', autofocus: true %>
+  <%= f.submit 'Ask', class: 'btn btn-primary' %>
+<% end %>

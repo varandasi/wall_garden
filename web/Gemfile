@@ -1,0 +1,82 @@
+source 'https://rubygems.org'
+
+ruby '3.4.7'
+
+gem 'rails', '~> 8.1'
+
+# Asset pipeline.
+gem 'propshaft'
+
+# Database.
+gem 'pg', '~> 1.1'
+gem 'pgvector'
+
+# App server.
+gem 'puma', '>= 5.0'
+
+# Hotwire / Stimulus / Importmap (no Node toolchain).
+gem 'importmap-rails'
+gem 'turbo-rails'
+gem 'stimulus-rails'
+
+gem 'jbuilder'
+gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
+
+# Background jobs and cable on Postgres — no Redis.
+gem 'solid_queue'
+gem 'solid_cable'
+gem 'mission_control-jobs'
+
+gem 'bootsnap', require: false
+gem 'kamal', require: false
+gem 'thruster', require: false
+gem 'image_processing', '~> 1.2'
+gem 'dockerfile-rails', group: :development
+
+# Auth.
+gem 'devise', '~> 5.0'
+gem 'devise-i18n'
+gem 'pundit', '~> 2.5'
+gem 'rack-attack'
+
+# i18n.
+gem 'rails-i18n', '~> 8.0'
+
+# Forms.
+gem 'simple_form'
+
+# Pagination + search.
+gem 'kaminari'
+gem 'pg_search'
+gem 'ransack'
+
+# LLM gateway — wraps Anthropic, OpenAI, etc. through a single API.
+gem 'ruby_llm'
+
+# HTTP for ntfy and any outbound integrations.
+gem 'faraday'
+
+# Markdown for the LLM-generated daily journal.
+gem 'redcarpet', '~> 3.6'
+gem 'rouge'
+
+# Email.
+gem 'sendgrid-ruby', group: :staging
+
+group :development, :test do
+  gem 'debug', platforms: %i[mri mingw x64_mingw]
+  gem 'brakeman', require: false
+  gem 'rspec-rails', '>= 7.1.1'
+  gem 'factory_bot_rails'
+  gem 'faker'
+  gem 'capybara'
+  gem 'selenium-webdriver', '~> 4.31'
+  gem 'simplecov', require: false
+  gem 'vcr', '~> 6.4'
+  gem 'webmock'
+  gem 'pundit-matchers', '~> 4.0'
+end
+
+group :development do
+  gem 'web-console'
+end

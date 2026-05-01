@@ -1,0 +1,40 @@
+<h1 class="h3 mb-3"><%= t('zones.title') %></h1>
+
+<div class="table-responsive">
+  <table class="table table-striped align-middle">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Plant</th>
+        <th class="text-end">Target %</th>
+        <th class="text-end">Daily cap</th>
+        <th class="text-end">Today</th>
+        <th>Status</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @zones.each do |zone| %>
+        <tr>
+          <td><%= link_to zone.name, zone %></td>
+          <td><%= zone.plant_profile&.common_name || '—' %></td>
+          <td class="text-end"><%= zone.target_moisture_pct %></td>
+          <td class="text-end"><%= zone.max_ml_per_day %></td>
+          <td class="text-end"><%= zone.ml_today.to_i %> mL</td>
+          <td>
+            <% if !zone.enabled %>
+              <span class="badge bg-secondary">off</span>
+            <% elsif zone.thirsty? %>
+              <span class="badge bg-warning text-dark">thirsty</span>
+            <% else %>
+              <span class="badge bg-success">ok</span>
+            <% end %>
+          </td>
+          <td class="text-end">
+            <%= link_to 'Edit', edit_zone_path(zone), class: 'btn btn-sm btn-outline-secondary' %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

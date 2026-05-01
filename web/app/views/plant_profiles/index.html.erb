@@ -1,0 +1,22 @@
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h1 class="h3 mb-0"><%= t('plant_profiles.title') %></h1>
+  <%= link_to 'New', new_plant_profile_path, class: 'btn btn-primary' %>
+</div>
+
+<table class="table align-middle">
+  <thead>
+    <tr><th>Name</th><th>Scientific</th><th>Moisture</th><th>Light</th><th>Temp</th><th></th></tr>
+  </thead>
+  <tbody>
+    <% @profiles.each do |p| %>
+      <tr>
+        <td><%= p.common_name %></td>
+        <td class="text-muted small"><%= p.scientific_name %></td>
+        <td><%= p.ideal_moisture_min %>–<%= p.ideal_moisture_max %>%</td>
+        <td><%= p.ideal_lux_min %>+ lx</td>
+        <td><%= p.ideal_temp_c_min %>–<%= p.ideal_temp_c_max %>°C</td>
+        <td class="text-end"><%= link_to 'Edit', edit_plant_profile_path(p), class: 'btn btn-sm btn-outline-secondary' %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

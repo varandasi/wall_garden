@@ -1,0 +1,10 @@
+<h1 class="h3 mb-3"><%= @profile.common_name %></h1>
+<dl class="row">
+  <dt class="col-sm-3">Scientific</dt>
+  <dd class="col-sm-9"><%= @profile.scientific_name %></dd>
+  <dt class="col-sm-3">Notes</dt>
+  <dd class="col-sm-9"><%= simple_format @profile.notes %></dd>
+  <dt class="col-sm-3">Moisture</dt>
+  <dd class="col-sm-9"><%= @profile.ideal_moisture_min %>–<%= @profile.ideal_moisture_max %>%</dd>
+</dl>
+<%= link_to 'Edit', edit_plant_profile_path(@profile), class: 'btn btn-outline-secondary' %>

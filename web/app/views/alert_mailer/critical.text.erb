@@ -1,0 +1,4 @@
+Wall Garden — <%= @alert.severity.upcase %>: <%= @alert.code %>
+Zone: <%= @alert.zone&.name || '-' %>
+<%= @alert.message %>
+Fired at <%= @alert.fired_at %>

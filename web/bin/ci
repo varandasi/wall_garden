@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+set -e
+APP_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+cd "$APP_ROOT"
+
+echo "== rspec =="
+bundle exec rspec
+
+echo "== brakeman =="
+bin/brakeman -q
+
+echo "== daemon hypothesis tests =="
+cd "$APP_ROOT/.." && cd daemon && uv run pytest -q

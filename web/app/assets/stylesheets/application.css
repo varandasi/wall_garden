@@ -1,0 +1,24 @@
+/*
+ * Project-specific overrides on top of Bootstrap.
+ * Bootstrap itself is loaded via CDN in the layout.
+ */
+
+:root {
+  --wg-card-radius: 0.75rem;
+}
+
+.card {
+  border-radius: var(--wg-card-radius);
+}
+
+.progress {
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  transition: width 0.4s ease;
+}
+
+dt.col-sm-3 { font-weight: 500; }

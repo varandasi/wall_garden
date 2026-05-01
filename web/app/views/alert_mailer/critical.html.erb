@@ -1,0 +1,4 @@
+<h2>Wall Garden — <%= @alert.severity.upcase %>: <code><%= @alert.code %></code></h2>
+<p><strong>Zone:</strong> <%= @alert.zone&.name || '—' %></p>
+<p><%= @alert.message %></p>
+<p><small>Fired at <%= I18n.l(@alert.fired_at) %></small></p>

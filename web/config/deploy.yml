@@ -1,0 +1,89 @@
+# Kamal deployment for the Pi. Set hosts.web to your Pi's hostname/IP and
+# fill in the registry credentials before running `kamal setup`.
+
+service: wallgarden
+image: <REGISTRY_USER>/wallgarden-web
+
+servers:
+  web:
+    hosts:
+      - <PI_HOST>            # e.g. wallgarden.local or 192.168.1.50
+    options:
+      add-host:
+        - host.docker.internal:host-gateway
+
+proxy:
+  ssl: false                 # LAN-only; switch to Tailscale or self-signed for HTTPS
+  host: <PI_HOST>
+
+registry:
+  server: ghcr.io
+  username: <REGISTRY_USER>
+  password:
+    - REGISTRY_PASSWORD
+
+builder:
+  arch: arm64                # Pi 5 is arm64
+
+env:
+  clear:
+    RAILS_ENV: production
+    PORT: '3100'
+    APP_HOST: <PI_HOST>
+    NTFY_BASE_URL: https://ntfy.sh
+    PHOTOS_DIR: /var/lib/wallgarden/photos
+  secret:
+    - RAILS_MASTER_KEY
+    - DATABASE_URL
+    - ANTHROPIC_API_KEY
+    - NTFY_TOPIC_CRITICAL
+    - NTFY_TOPIC_DIGEST
+    - SMTP_USER_NAME
+    - SMTP_PASSWORD
+    - ALERT_EMAIL_TO
+    - MONTHLY_LLM_COST_CAP_USD
+
+# Bind the photos directory so the daemon (separate container) writes images
+# the web container serves via PhotosController#show.
+volumes:
+  - "/var/lib/wallgarden/photos:/var/lib/wallgarden/photos"
+
+asset_path: /rails/public/assets
+
+# Sidecar accessory containers — Postgres + the Python daemon.
+accessories:
+  postgres:
+    image: pgvector/pgvector:pg16
+    host: <PI_HOST>
+    port: 5432:5432
+    env:
+      clear:
+        POSTGRES_USER: wallgarden
+        POSTGRES_DB: wallgarden_production
+      secret:
+        - POSTGRES_PASSWORD
+    volumes:
+      - "/var/lib/wallgarden/pg:/var/lib/postgresql/data"
+
+  daemon:
+    image: <REGISTRY_USER>/wallgarden-daemon
+    host: <PI_HOST>
+    env:
+      clear:
+        WALLGARDEN_BACKEND: pi
+        PHOTOS_DIR: /var/lib/wallgarden/photos
+      secret:
+        - DATABASE_URL
+    options:
+      device:
+        - /dev/i2c-1
+        - /dev/gpiochip0
+        - /dev/video0:/dev/video0   # Pi Camera
+      group-add:
+        - i2c
+        - gpio
+        - video
+      cap-add:
+        - SYS_RAWIO
+    volumes:
+      - "/var/lib/wallgarden/photos:/var/lib/wallgarden/photos"

@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+APP_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+
+if ! gem list --silent --installed --version ">= 0.1.0" foreman; then
+  echo "Installing foreman..."
+  gem install foreman --conservative
+fi
+
+# Procfile.dev runs web + jobs together. The Python daemon is launched from
+# the repo root's Procfile.dev (one level up). Run that one if you want all
+# three; this one is web-only.
+exec foreman start -f "$APP_ROOT/Procfile.dev" "$@"

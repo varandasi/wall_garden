@@ -1,0 +1,68 @@
+en:
+  app_name: 'Wall Garden'
+  hello: 'Hello world'
+
+  date:
+    formats:
+      short: '%d %b'
+      long:  '%d %B %Y'
+
+  time:
+    formats:
+      short: '%d %b %H:%M'
+      long:  '%d %B %Y, %H:%M'
+
+  dashboard:
+    title: 'Wall garden'
+    subtitle: 'Live'
+    last_reading: 'last reading'
+    no_data: 'no data yet — start the daemon'
+    moisture: 'Moisture'
+    target: 'Target'
+    air_temp: 'Air temp'
+    humidity: 'Humidity'
+    light: 'Light'
+    reservoir: 'Reservoir'
+    daily_water: 'Today'
+    actions:
+      water: 'Water now'
+      edit: 'Edit thresholds'
+      acknowledge: 'Acknowledge'
+
+  zones:
+    title: 'Zones'
+    edit_title: 'Edit zone'
+    target_moisture_pct: 'Target moisture %'
+    hysteresis_pct: 'Dead-band width (%)'
+    max_ml_per_day: 'Daily cap (mL)'
+    max_ml_per_event: 'Per-event cap (mL)'
+    cooldown_minutes: 'Cooldown (min)'
+    pump_ml_per_sec: 'Pump rate (mL/s)'
+    enabled: 'Enabled'
+
+  alerts:
+    title: 'Alerts'
+    none: 'No alerts. Plants are surviving.'
+    unacknowledged: 'Unacknowledged'
+    acknowledged: 'Acknowledged'
+    severity:
+      info: 'info'
+      warn: 'warn'
+      critical: 'critical'
+
+  plant_profiles:
+    title: 'Plant profiles'
+
+  errors:
+    messages:
+      not_authorized: 'You are not authorised to do that.'
+
+  navbar:
+    dashboard: 'Dashboard'
+    zones: 'Zones'
+    plants: 'Plants'
+    alerts: 'Alerts'
+    photos: 'Photos'
+    chat: 'Chat'
+    jobs: 'Jobs'
+    sign_out: 'Sign out'

@@ -1,0 +1,14 @@
+.git/
+.bundle/
+log/
+tmp/
+storage/
+spec/
+.rspec
+node_modules/
+public/assets/
+coverage/
+.byebug_history
+.env*
+config/credentials/*.key
+config/master.key

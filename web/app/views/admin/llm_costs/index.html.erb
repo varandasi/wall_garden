@@ -1,0 +1,26 @@
+<h1 class="h3 mb-3">LLM costs</h1>
+<div class="card mb-4">
+  <div class="card-body">
+    <h2 class="h5">Month-to-date</h2>
+    <p class="display-6">$<%= number_with_precision(@month_to_date, precision: 2) %> <small class="text-muted">/ $<%= number_with_precision(@cap, precision: 2) %> cap</small></p>
+  </div>
+</div>
+
+<h2 class="h5">By kind</h2>
+<table class="table">
+  <% @breakdown.each do |kind, cost| %>
+    <tr><td><%= kind %></td><td class="text-end">$<%= number_with_precision(cost, precision: 4) %></td></tr>
+  <% end %>
+</table>
+
+<h2 class="h5 mt-4">Recent analyses</h2>
+<table class="table">
+  <% @recent.each do |a| %>
+    <tr>
+      <td><%= l(a.ran_at, format: :short) %></td>
+      <td><%= a.kind %></td>
+      <td><%= a.model %></td>
+      <td class="text-end">$<%= number_with_precision(a.cost_usd, precision: 4) %></td>
+    </tr>
+  <% end %>
+</table>

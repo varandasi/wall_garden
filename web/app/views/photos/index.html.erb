@@ -1,0 +1,13 @@
+<h1 class="h3 mb-3">Photos</h1>
+<% if @photos.empty? %>
+  <p class="text-muted">No photos yet. Slice 5 wires the photographer.</p>
+<% else %>
+  <div class="row g-2">
+    <% @photos.each do |p| %>
+      <div class="col-6 col-md-3">
+        <%= link_to image_tag(photo_path(p), class: 'img-fluid rounded'), photo_path(p), target: '_blank' %>
+        <small class="text-muted d-block"><%= l(p.taken_at, format: :short) %></small>
+      </div>
+    <% end %>
+  </div>
+<% end %>

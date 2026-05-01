@@ -1,0 +1,62 @@
+<div class="row g-3 mb-4">
+  <div class="col-6 col-md-3">
+    <div class="card border-0 shadow-sm">
+      <div class="card-body">
+        <div class="text-muted small text-uppercase"><%= t('dashboard.air_temp') %></div>
+        <div class="fs-3 fw-semibold"><%= @ambient_temp ? "#{number_with_precision(@ambient_temp.value, precision: 1)} °C" : '—' %></div>
+      </div>
+    </div>
+  </div>
+  <div class="col-6 col-md-3">
+    <div class="card border-0 shadow-sm">
+      <div class="card-body">
+        <div class="text-muted small text-uppercase"><%= t('dashboard.humidity') %></div>
+        <div class="fs-3 fw-semibold"><%= @ambient_rh ? "#{number_with_precision(@ambient_rh.value, precision: 0)}%" : '—' %></div>
+      </div>
+    </div>
+  </div>
+  <div class="col-6 col-md-3">
+    <div class="card border-0 shadow-sm">
+      <div class="card-body">
+        <div class="text-muted small text-uppercase"><%= t('dashboard.light') %></div>
+        <div class="fs-3 fw-semibold"><%= @ambient_lux ? "#{number_with_delimiter(@ambient_lux.value.to_i)} lx" : '—' %></div>
+      </div>
+    </div>
+  </div>
+  <div class="col-6 col-md-3">
+    <div class="card border-0 shadow-sm">
+      <div class="card-body">
+        <div class="text-muted small text-uppercase"><%= t('dashboard.reservoir') %></div>
+        <div class="fs-3 fw-semibold">
+          <% if @reservoir && @reservoir.value.to_f > 0 %>
+            <span class="text-danger">empty</span>
+          <% else %>
+            ok
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row g-3">
+  <% @zones.each do |zone| %>
+    <%= render 'zone_card', zone: zone %>
+  <% end %>
+</div>
+
+<% if @recent_alerts.any? %>
+  <h2 class="h5 mt-4"><%= t('alerts.unacknowledged') %></h2>
+  <ul class="list-group">
+    <% @recent_alerts.each do |a| %>
+      <li class="list-group-item d-flex justify-content-between align-items-start">
+        <div>
+          <span class="badge bg-<%= a.severity == 'critical' ? 'danger' : (a.severity == 'warn' ? 'warning text-dark' : 'info') %>"><%= a.severity %></span>
+          <strong><%= a.code %></strong>
+          <div class="small text-muted"><%= a.message %></div>
+        </div>
+        <small class="text-muted"><%= l(a.fired_at, format: :short) %></small>
+      </li>
+    <% end %>
+  </ul>
+<% end %>

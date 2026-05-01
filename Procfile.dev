@@ -1,0 +1,3 @@
+web:    cd web    && bin/rails server -p 3100
+jobs:   cd web    && bin/jobs
+daemon: cd daemon && uv run python -m wallgardend.main

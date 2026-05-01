@@ -1,0 +1,19 @@
+[Unit]
+Description=Wall Garden SolidQueue worker
+After=network.target postgresql.service
+Requires=postgresql.service
+
+[Service]
+Type=simple
+User=wallgarden
+WorkingDirectory=/opt/wallgarden/web
+EnvironmentFile=/etc/wallgarden/web.env
+ExecStart=/usr/local/bin/bundle exec bin/jobs
+Restart=always
+RestartSec=3
+Nice=5
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

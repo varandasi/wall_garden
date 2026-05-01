@@ -1,0 +1,11 @@
+# Hardware deps installed only on the Raspberry Pi.
+# `daemon/wallgardend/hardware/pi.py` lazy-imports each module, so a missing
+# package on macOS dev is safe.
+adafruit-blinka>=8.0
+adafruit-circuitpython-ads1x15>=2.2
+adafruit-circuitpython-bme280>=2.6
+adafruit-circuitpython-bh1750>=1.1
+gpiozero>=2.0
+rpi-lgpio>=0.6
+# picamera2 ships via apt on Pi OS Bookworm, NOT pip:
+#   sudo apt install -y python3-picamera2

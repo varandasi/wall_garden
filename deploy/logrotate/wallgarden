@@ -1,0 +1,13 @@
+/opt/wallgarden/web/log/*.log {
+    daily
+    missingok
+    rotate 14
+    compress
+    delaycompress
+    notifempty
+    create 0640 wallgarden wallgarden
+    sharedscripts
+    postrotate
+        systemctl reload wallgarden-web.service > /dev/null 2>&1 || true
+    endscript
+}

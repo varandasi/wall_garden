@@ -1,0 +1,21 @@
+pt:
+  app_name: 'Jardim Vertical'
+  dashboard:
+    title: 'Jardim vertical'
+    subtitle: 'Ao vivo'
+    moisture: 'Humidade'
+    target: 'Alvo'
+    air_temp: 'Temperatura do ar'
+    humidity: 'Humidade do ar'
+    light: 'Luz'
+    reservoir: 'Reservatório'
+    daily_water: 'Hoje'
+    actions:
+      water: 'Regar agora'
+      edit: 'Editar limites'
+      acknowledge: 'Reconhecer'
+  zones:
+    title: 'Zonas'
+  alerts:
+    title: 'Alertas'
+    none: 'Sem alertas. As plantas estão a sobreviver.'

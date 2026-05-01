@@ -1,0 +1,36 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch('RAILS_MAX_THREADS', 5) %>
+  host: <%= ENV.fetch('DB_HOST', 'localhost') %>
+  port: <%= ENV.fetch('DB_PORT', 5433) %>
+  username: <%= ENV.fetch('DB_USER', 'wallgarden') %>
+  password: <%= ENV.fetch('DB_PASSWORD', 'wallgarden') %>
+
+development:
+  <<: *default
+  database: wallgarden_development
+
+test:
+  <<: *default
+  database: wallgarden_test
+
+# In production we use Postgres on the Pi over a unix socket inside the
+# container — DATABASE_URL is the cleanest knob for Kamal.
+production:
+  primary:
+    <<: *default
+    database: wallgarden_production
+    url: <%= ENV['DATABASE_URL'] %>
+  cache:
+    <<: *default
+    database: wallgarden_production_cache
+    migrations_paths: db/cache_migrate
+  queue:
+    <<: *default
+    database: wallgarden_production_queue
+    migrations_paths: db/queue_migrate
+  cable:
+    <<: *default
+    database: wallgarden_production_cable
+    migrations_paths: db/cable_migrate

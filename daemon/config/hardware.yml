@@ -1,0 +1,26 @@
+# Static hardware mapping — used by the Pi backend, ignored by the simulator.
+# Keep in sync with how you actually wire the Pi.
+i2c_bus: 1
+bme280_address: 0x76
+bh1750_address: 0x23
+reservoir_float_gpio: 17
+lamp_gpio: 26
+
+zones:
+  - zone_id: 1
+    ads_address: 0x48
+    ads_channel: 0
+    pump_gpio: 5
+  - zone_id: 2
+    ads_address: 0x48
+    ads_channel: 1
+    pump_gpio: 6
+  - zone_id: 3
+    ads_address: 0x48
+    ads_channel: 2
+    pump_gpio: 13
+  - zone_id: 4
+    ads_address: 0x48
+    ads_channel: 3
+    pump_gpio: 16
+  # Expansion to 8: second ADS1115 at 0x49, four more pump GPIOs.

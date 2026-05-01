@@ -1,0 +1,36 @@
+# OS
+.DS_Store
+
+# Env
+.env
+.env.local
+.env.*.local
+
+# Python
+daemon/.venv/
+daemon/__pycache__/
+daemon/**/__pycache__/
+daemon/.pytest_cache/
+daemon/.hypothesis/
+*.pyc
+*.pyo
+
+# Ruby / Rails
+web/log/*.log
+web/tmp/
+web/storage/
+web/public/assets/
+web/.byebug_history
+web/coverage/
+web/spec/examples.txt
+
+# Photos written by the daemon (dev)
+tmp/photos/
+
+# Simulator scratch
+daemon/simulator/control.json
+daemon/simulator/state.json
+
+# Editor
+.idea/
+.vscode/

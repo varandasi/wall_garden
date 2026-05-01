@@ -1,0 +1,18 @@
+[Unit]
+Description=Wall Garden Rails (Puma)
+After=network.target postgresql.service
+Requires=postgresql.service
+
+[Service]
+Type=simple
+User=wallgarden
+WorkingDirectory=/opt/wallgarden/web
+EnvironmentFile=/etc/wallgarden/web.env
+ExecStart=/usr/local/bin/bundle exec puma -C config/puma.rb
+Restart=always
+RestartSec=3
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

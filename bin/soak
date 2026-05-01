@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+set -e
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+cd "$ROOT/daemon"
+exec uv run python -m scripts.soak_runner "$@"

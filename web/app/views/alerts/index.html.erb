@@ -1,0 +1,46 @@
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <div>
+    <h1 class="h3 mb-0"><%= t('alerts.title') %></h1>
+    <small class="text-muted"><%= @unacknowledged_count %> unacknowledged</small>
+  </div>
+</div>
+
+<% if @alerts.empty? %>
+  <div class="alert alert-info"><%= t('alerts.none') %></div>
+<% else %>
+  <div class="table-responsive">
+    <table class="table table-hover align-middle">
+      <thead>
+        <tr>
+          <th>Severity</th>
+          <th>Code</th>
+          <th>Zone</th>
+          <th>Message</th>
+          <th>Fired</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @alerts.each do |a| %>
+          <tr class="<%= 'table-warning' if a.acknowledged_at.nil? %>">
+            <td><span class="badge bg-<%= a.severity == 'critical' ? 'danger' : (a.severity == 'warn' ? 'warning text-dark' : 'info') %>"><%= a.severity %></span></td>
+            <td><code><%= a.code %></code></td>
+            <td><%= a.zone&.name || '—' %></td>
+            <td class="small"><%= a.message %></td>
+            <td><%= l(a.fired_at, format: :short) %></td>
+            <td>
+              <% if a.acknowledged_at.nil? %>
+                <%= button_to t('dashboard.actions.acknowledge'), acknowledge_alert_path(a), method: :post,
+                              class: 'btn btn-sm btn-outline-secondary' %>
+              <% else %>
+                <small class="text-muted"><%= l(a.acknowledged_at, format: :short) %></small>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <%= paginate @alerts %>
+<% end %>

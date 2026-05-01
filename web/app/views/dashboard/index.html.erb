@@ -1,0 +1,23 @@
+<div class="d-flex align-items-center justify-content-between mb-3">
+  <div>
+    <h1 class="h3 mb-0"><%= t('dashboard.title') %></h1>
+    <small class="text-muted"><%= t('dashboard.subtitle') %></small>
+  </div>
+  <div class="text-end">
+    <% if @daemon_stale %>
+      <span class="badge bg-danger">daemon stale</span>
+    <% else %>
+      <span class="badge bg-success">daemon ok</span>
+    <% end %>
+  </div>
+</div>
+
+<%# Polled by app/javascript/controllers/auto_refresh_controller.js — every
+    5 seconds it fetches this page and morphs the inner #live region. %>
+<div data-controller="auto-refresh"
+     data-auto-refresh-interval-value="5000"
+     data-auto-refresh-target-id-value="live">
+  <div id="live">
+    <%= render 'live' %>
+  </div>
+</div>

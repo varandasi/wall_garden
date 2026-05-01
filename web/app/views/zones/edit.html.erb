@@ -1,0 +1,26 @@
+<h1 class="h3 mb-3"><%= t('zones.edit_title') %> — <%= @zone.name %></h1>
+
+<%= simple_form_for @zone do |f| %>
+  <div class="row">
+    <div class="col-12 col-md-6">
+      <%= f.input :name %>
+      <%= f.association :plant_profile, label_method: :common_name %>
+      <%= f.input :target_moisture_pct, label: t('zones.target_moisture_pct') %>
+      <%= f.input :hysteresis_pct, label: t('zones.hysteresis_pct') %>
+      <%= f.input :enabled, label: t('zones.enabled'), as: :boolean %>
+    </div>
+    <div class="col-12 col-md-6">
+      <%= f.input :max_ml_per_day, label: t('zones.max_ml_per_day') %>
+      <%= f.input :max_ml_per_event, label: t('zones.max_ml_per_event') %>
+      <%= f.input :cooldown_minutes, label: t('zones.cooldown_minutes') %>
+      <%= f.input :pump_ml_per_sec, label: t('zones.pump_ml_per_sec') %>
+      <%= f.input :moisture_dry_raw, hint: 'ADC reading in air (calibration)' %>
+      <%= f.input :moisture_wet_raw, hint: 'ADC reading in water (calibration)' %>
+    </div>
+  </div>
+
+  <div class="d-flex gap-2">
+    <%= f.submit class: 'btn btn-primary' %>
+    <%= link_to 'Cancel', zone_path(@zone), class: 'btn btn-outline-secondary' %>
+  </div>
+<% end %>
